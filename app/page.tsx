@@ -5,27 +5,6 @@ import { callAIAgent, AIAgentResponse } from '@/lib/aiAgent'
 import { FiMoon, FiZap, FiBookOpen, FiMusic, FiSend, FiArrowLeft, FiRefreshCw, FiMessageCircle, FiUsers } from 'react-icons/fi'
 
 // ============================================================
-// THEME
-// ============================================================
-
-const THEME_VARS: Record<string, string> = {
-  '--background': '270 30% 4%',
-  '--foreground': '270 20% 95%',
-  '--card': '270 30% 6%',
-  '--card-foreground': '270 20% 95%',
-  '--popover': '270 30% 9%',
-  '--muted': '270 22% 15%',
-  '--muted-foreground': '270 15% 60%',
-  '--border': '270 22% 15%',
-  '--input': '270 22% 20%',
-  '--ring': '262 70% 50%',
-  '--accent': '262 70% 50%',
-  '--primary': '270 20% 95%',
-  '--primary-foreground': '270 30% 10%',
-  '--secondary': '270 25% 12%',
-}
-
-// ============================================================
 // TYPES
 // ============================================================
 
@@ -240,21 +219,29 @@ function FriendIcon({ iconKey, size = 24 }: { iconKey: AIFriend['iconKey']; size
 
 function TypingIndicator({ friendName }: { friendName: string }) {
   return (
-    <div className="flex items-start gap-3 max-w-[80%]">
-      <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: 'hsl(270, 30%, 12%)' }}>
-        <FiMessageCircle size={14} style={{ color: 'hsl(270, 15%, 60%)' }} />
-      </div>
-      <div className="rounded-2xl rounded-tl-sm px-4 py-3" style={{ backgroundColor: 'hsl(270, 30%, 9%)' }}>
-        <div className="flex items-center gap-1.5">
-          <span className="text-xs" style={{ color: 'hsl(270, 15%, 60%)' }}>{friendName} is typing</span>
-          <span className="flex gap-1">
-            <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ backgroundColor: 'hsl(270, 15%, 60%)', animationDelay: '0ms' }} />
-            <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ backgroundColor: 'hsl(270, 15%, 60%)', animationDelay: '150ms' }} />
-            <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ backgroundColor: 'hsl(270, 15%, 60%)', animationDelay: '300ms' }} />
-          </span>
+    <>
+      <style>{`
+        @keyframes typingDot {
+          0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+          40% { transform: translateY(-4px); opacity: 1; }
+        }
+      `}</style>
+      <div className="flex items-start gap-3 max-w-[80%]">
+        <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: 'hsl(270, 30%, 12%)' }}>
+          <FiMessageCircle size={14} style={{ color: 'hsl(270, 15%, 60%)' }} />
+        </div>
+        <div className="rounded-2xl rounded-tl-sm px-4 py-3" style={{ backgroundColor: 'hsl(270, 30%, 9%)' }}>
+          <div className="flex items-center gap-1.5">
+            <span className="text-xs" style={{ color: 'hsl(270, 15%, 60%)' }}>{friendName} is typing</span>
+            <span className="flex gap-1">
+              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'hsl(270, 15%, 60%)', animation: 'typingDot 1.4s ease-in-out infinite', animationDelay: '0ms' }} />
+              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'hsl(270, 15%, 60%)', animation: 'typingDot 1.4s ease-in-out infinite', animationDelay: '200ms' }} />
+              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'hsl(270, 15%, 60%)', animation: 'typingDot 1.4s ease-in-out infinite', animationDelay: '400ms' }} />
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -521,7 +508,7 @@ function ChatView({
             onChange={(e) => onInputChange(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={`Say something to ${friend.name}...`}
-            className="flex-1 rounded-xl px-4 py-3 text-sm font-sans border outline-none transition-colors duration-200 focus:ring-2"
+            className="flex-1 rounded-xl px-4 py-3 text-sm font-sans border outline-none transition-colors duration-200 focus:ring-2 focus:ring-[hsl(262,70%,50%)] focus:border-[hsl(262,70%,50%)]"
             style={{
               backgroundColor: 'hsl(270, 22%, 10%)',
               borderColor: 'hsl(270, 22%, 18%)',
@@ -721,28 +708,25 @@ export default function Page() {
   if (selectedFriend) {
     const friendMessages = getMessages(selectedFriend.id)
     return (
-      <div style={THEME_VARS as React.CSSProperties}>
-        <ChatView
-          friend={selectedFriend}
-          messages={friendMessages}
-          isTyping={isTyping}
-          inputValue={inputValue}
-          onInputChange={setInputValue}
-          onSend={sendMessage}
-          onRetry={retryMessage}
-          onBack={() => {
-            setSelectedFriend(null)
-            setInputValue('')
-          }}
-        />
-      </div>
+      <ChatView
+        friend={selectedFriend}
+        messages={friendMessages}
+        isTyping={isTyping}
+        inputValue={inputValue}
+        onInputChange={setInputValue}
+        onSend={sendMessage}
+        onRetry={retryMessage}
+        onBack={() => {
+          setSelectedFriend(null)
+          setInputValue('')
+        }}
+      />
     )
   }
 
   // ======== ROSTER VIEW ========
   return (
-    <div style={THEME_VARS as React.CSSProperties}>
-      <div className="min-h-screen font-sans" style={{ backgroundColor: 'hsl(270, 30%, 4%)' }}>
+    <div className="min-h-screen font-sans" style={{ backgroundColor: 'hsl(270, 30%, 4%)' }}>
         {/* Header */}
         <header
           className="border-b"
@@ -855,7 +839,6 @@ export default function Page() {
             </div>
           </div>
         </main>
-      </div>
     </div>
   )
 }
