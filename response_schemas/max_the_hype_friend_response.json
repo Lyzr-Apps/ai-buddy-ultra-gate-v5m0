@@ -1,0 +1,14 @@
+{
+  "agent_name": "Max \u2014 The Hype Friend",
+  "agent_id": "69934505c1e19e61c2993e5a",
+  "description": "An energetic, supportive AI friend who hypes you up, loves sports and pop culture, and uses casual slang.",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "response": "string"
+  },
+  "example_response": {
+    "response": "Max's energetic, supportive reply in his hype style"
+  }
+}

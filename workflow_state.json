@@ -1,0 +1,41 @@
+{
+  "status": "complete",
+  "agents": [
+    {
+      "name": "Luna — The Dreamer",
+      "agent_id": "6993450550311a64b998baa6",
+      "node_id": "luna_agent",
+      "provider": "openai",
+      "model": "gpt-4.1",
+      "type": "text"
+    },
+    {
+      "name": "Max — The Hype Friend",
+      "agent_id": "69934505c1e19e61c2993e5a",
+      "node_id": "max_agent",
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-5",
+      "type": "text"
+    },
+    {
+      "name": "Sage — The Advisor",
+      "agent_id": "6993450607d14187cc9991e1",
+      "node_id": "sage_agent",
+      "provider": "google",
+      "model": "gemini-2.5-pro",
+      "type": "text"
+    },
+    {
+      "name": "Pixel — The Creative",
+      "agent_id": "6993450612539fd6994b5e87",
+      "node_id": "pixel_agent",
+      "provider": "openai",
+      "model": "gpt-4.1",
+      "type": "text"
+    }
+  ],
+  "knowledge_bases": [],
+  "schedules": [],
+  "pattern": "multiple_independent_agents",
+  "total_agents": 4
+}
